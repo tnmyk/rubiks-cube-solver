@@ -1,0 +1,37 @@
+.video {
+  width: max-content;
+}
+.canvas {
+  margin: 0 auto;
+  display: block;
+  /* width: 40%; */
+}
+.canvasContainer {
+  /* width: fit-content; */
+  position: relative;
+}
+.boxesContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* width: max-content; */
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, max-content);
+  pointer-events: none;
+}
+.boxesContainer div {
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid orange;
+  pointer-events: none;
+}
+
+.color {
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid black;
+  margin-right: 1rem;
+  display: inline-block;
+}
