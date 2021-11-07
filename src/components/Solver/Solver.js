@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import colorArr from "./colorArr";
 import styles from "./Solver.module.css";
 
 function findPos(obj) {
@@ -16,15 +17,9 @@ function findPos(obj) {
 function rgbToHex(r, g, b) {
   if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
   const colorString = ((r << 16) | (g << 8) | b).toString(16);
+  console.log(colorString);
   return colorString;
 }
-
-const colorArr = [
-  [255, 0, 0],
-  [0, 255, 0],
-  [0, 0, 255],
-  [255, 165, 0],
-];
 
 const getColorName = (r, g, b) => {
   let index;
@@ -92,11 +87,11 @@ const Solver = () => {
     for (let i = 0; i < boxes.length; ++i) {
       const box = boxes[i];
       var boxPosition = findPos(box);
-      var x = boxPosition.x - position.x - 50; // idk why I have to subtract 50... spend a lot of time to figute out
-      var y = boxPosition.y - position.y - 50;
+      var x = boxPosition.x - position.x - 65; // idk why I have to subtract ... spend a lot of time to figute out
+      var y = boxPosition.y - position.y - 65; // subtract value changes on changing grid gap
       var p = ctx.getImageData(x, y, 1, 1).data;
       var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-      console.log("nx:", x, "ny:", y);
+      // console.log("nx:", x, "ny:", y);
       const colorArr = getColorName(p[0], p[1], p[2]);
       colors[
         i
@@ -124,7 +119,7 @@ const Solver = () => {
             var y = e.pageY - position.y;
             var p = ctx.getImageData(x, y, 1, 1).data;
             var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-            console.log("x:", x, "y:", y);
+            // console.log("x:", x, "y:", y);
 
             colors[0].style.backgroundColor = hex;
             // getColorName(p[0], p[1], p[2]);
@@ -145,12 +140,15 @@ const Solver = () => {
         </div>
       </div>
       <button onClick={handleClick}>ll</button>
+      <br />
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
+      <br />
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
+      <br />
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>

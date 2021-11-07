@@ -17,7 +17,7 @@
   transform: translate(-50%, -50%);
   /* width: max-content; */
   display: grid;
-  gap: 2rem;
+  gap: 3rem;
   grid-template-columns: repeat(3, max-content);
   pointer-events: none;
 }
