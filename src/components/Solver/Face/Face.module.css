@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 1.2rem;
+}
+
+.square {
+  border: 1px solid gray;
+  width: 1.5rem;
+  height: 1.5rem;
+}

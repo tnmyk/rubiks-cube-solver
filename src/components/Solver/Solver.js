@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import colorArr from "./colorArr";
+import Face from "./Face/Face";
 import styles from "./Solver.module.css";
 
 function findPos(obj) {
@@ -10,18 +11,16 @@ function findPos(obj) {
     offsetLeft += obj.offsetLeft;
     obj = obj.offsetParent;
   }
-  // console.log({ x: offsetLeft, y: offsetTop });
   return { x: offsetLeft, y: offsetTop };
 }
 
 function rgbToHex(r, g, b) {
   if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
   const colorString = ((r << 16) | (g << 8) | b).toString(16);
-  console.log(colorString);
   return colorString;
 }
 
-const getColorName = (r, g, b) => {
+const getColorIndex = (r, g, b) => {
   let index;
   let min = Number.MAX_SAFE_INTEGER;
   for (let i = 0; i < colorArr.length; ++i) {
@@ -38,21 +37,19 @@ const getColorName = (r, g, b) => {
   return index;
 };
 
+let ctx;
 const Solver = () => {
-  const [sides, setSides] = [];
+  const [sides, setSides] = useState([]);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  let ctx;
   function draw() {
     ctx.drawImage(videoRef.current, 0, 0, ctx.canvas.width, ctx.canvas.height);
     requestAnimationFrame(draw);
   }
 
   useEffect(() => {
-    let ratio;
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
       videoRef.current.srcObject = stream;
-      ratio = stream.getVideoTracks()[0].getSettings().aspectRatio;
       ctx = canvasRef.current.getContext("2d");
       ctx.canvas.width = videoRef.current.clientWidth;
       ctx.canvas.height = videoRef.current.clientHeight;
@@ -67,7 +64,7 @@ const Solver = () => {
   const handleClick = () => {
     var position = findPos(canvasRef.current);
     const boxes = document.getElementsByClassName("box");
-    const colors = document.getElementsByClassName("color");
+    let tempSide = [];
     for (let i = 0; i < boxes.length; ++i) {
       const box = boxes[i];
       var boxPosition = findPos(box);
@@ -75,12 +72,12 @@ const Solver = () => {
       var y = boxPosition.y - position.y - 65; // subtract value changes on changing grid gap
       var p = ctx.getImageData(x, y, 1, 1).data;
       var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-      const colorIndex = getColorName(p[0], p[1], p[2]);
-      colors[
-        i
-      ].style.backgroundColor = `rgb(${colorArr[0]},${colorArr[1]},${colorArr[2]})`;
+      const colorIndex = getColorIndex(p[0], p[1], p[2]);
+      tempSide.push(colorIndex);
     }
+    setSides([...sides, tempSide]);
   };
+
   return (
     <div>
       <video
@@ -94,19 +91,19 @@ const Solver = () => {
       <div className={styles.canvasContainer}>
         <canvas ref={canvasRef} className={styles.canvas}></canvas>
         <div className={styles.boxesContainer}>
-          <div className="box">1</div>
-          <div className="box">2</div>
-          <div className="box">3</div>
-          <div className="box">4</div>
-          <div className="box">5</div>
-          <div className="box">6</div>
-          <div className="box">7</div>
-          <div className="box">8</div>
-          <div className="box">9</div>
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
+          <div className="box" />
         </div>
       </div>
       <button onClick={handleClick}>ll</button>
-      <br />
+      {/* <br />
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
@@ -117,7 +114,10 @@ const Solver = () => {
       <br />
       <div className={`${styles.color} color`}></div>
       <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
+      <div className={`${styles.color} color`}></div> */}
+      {sides.map((side) => {
+        return <Face key={Math.random()} side={side} />;
+      })}
     </div>
   );
 };
