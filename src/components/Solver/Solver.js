@@ -35,26 +35,11 @@ const getColorName = (r, g, b) => {
       min = temp;
     }
   }
-  return colorArr[index];
-  // console.log(index);
-  // switch (index) {
-  //   case 0:
-  //     console.log("red");
-  //     break;
-  //   case 1:
-  //     console.log("green");
-  //     break;
-  //   case 2:
-  //     console.log("blue");
-  //     break;
-
-  //   case 3:
-  //     console.log("orange");
-  //     break;
-  // }
+  return index;
 };
 
 const Solver = () => {
+  const [sides, setSides] = [];
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   let ctx;
@@ -71,12 +56,11 @@ const Solver = () => {
       ctx = canvasRef.current.getContext("2d");
       ctx.canvas.width = videoRef.current.clientWidth;
       ctx.canvas.height = videoRef.current.clientHeight;
-      // ctx.canvas.width = 400 * ratio;
-      // ctx.canvas.height = 400;
     });
     setTimeout(() => {
       ctx.canvas.width = videoRef.current.clientWidth;
       ctx.canvas.height = videoRef.current.clientHeight;
+      videoRef.current.style.display = "none";
     }, 1000);
   }, []);
 
@@ -91,12 +75,10 @@ const Solver = () => {
       var y = boxPosition.y - position.y - 65; // subtract value changes on changing grid gap
       var p = ctx.getImageData(x, y, 1, 1).data;
       var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-      // console.log("nx:", x, "ny:", y);
-      const colorArr = getColorName(p[0], p[1], p[2]);
+      const colorIndex = getColorName(p[0], p[1], p[2]);
       colors[
         i
       ].style.backgroundColor = `rgb(${colorArr[0]},${colorArr[1]},${colorArr[2]})`;
-      // getColorName(p[0], p[1], p[2]);
     }
   };
   return (
@@ -110,23 +92,7 @@ const Solver = () => {
         className={styles.video}
       ></video>
       <div className={styles.canvasContainer}>
-        <canvas
-          onClick={(e) => {
-            const colors = document.getElementsByClassName("color");
-
-            var position = findPos(e.target);
-            var x = e.pageX - position.x;
-            var y = e.pageY - position.y;
-            var p = ctx.getImageData(x, y, 1, 1).data;
-            var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-            // console.log("x:", x, "y:", y);
-
-            colors[0].style.backgroundColor = hex;
-            // getColorName(p[0], p[1], p[2]);
-          }}
-          ref={canvasRef}
-          className={styles.canvas}
-        ></canvas>
+        <canvas ref={canvasRef} className={styles.canvas}></canvas>
         <div className={styles.boxesContainer}>
           <div className="box">1</div>
           <div className="box">2</div>
