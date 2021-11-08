@@ -53,12 +53,12 @@ const Solver = () => {
       ctx = canvasRef.current.getContext("2d");
       ctx.canvas.width = videoRef.current.clientWidth;
       ctx.canvas.height = videoRef.current.clientHeight;
+      setTimeout(() => {
+        ctx.canvas.width = videoRef.current.clientWidth;
+        ctx.canvas.height = videoRef.current.clientHeight;
+        videoRef.current.style.display = "none";
+      }, 1000);
     });
-    setTimeout(() => {
-      ctx.canvas.width = videoRef.current.clientWidth;
-      ctx.canvas.height = videoRef.current.clientHeight;
-      videoRef.current.style.display = "none";
-    }, 1000);
   }, []);
 
   const handleClick = () => {
