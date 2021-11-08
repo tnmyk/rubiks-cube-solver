@@ -14,11 +14,11 @@ function findPos(obj) {
   return { x: offsetLeft, y: offsetTop };
 }
 
-function rgbToHex(r, g, b) {
-  if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
-  const colorString = ((r << 16) | (g << 8) | b).toString(16);
-  return colorString;
-}
+// function rgbToHex(r, g, b) {
+//   if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
+//   const colorString = ((r << 16) | (g << 8) | b).toString(16);
+//   return colorString;
+// }
 
 const getColorIndex = (r, g, b) => {
   let index;
@@ -71,7 +71,7 @@ const Solver = () => {
       var x = boxPosition.x - position.x - 65; // idk why I have to subtract ... spend a lot of time to figute out
       var y = boxPosition.y - position.y - 65; // subtract value changes on changing grid gap
       var p = ctx.getImageData(x, y, 1, 1).data;
-      var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+      // var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
       const colorIndex = getColorIndex(p[0], p[1], p[2]);
       tempSide.push(colorIndex);
     }
@@ -103,18 +103,6 @@ const Solver = () => {
         </div>
       </div>
       <button onClick={handleClick}>ll</button>
-      {/* <br />
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
-      <br />
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
-      <br />
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div>
-      <div className={`${styles.color} color`}></div> */}
       {sides.map((side) => {
         return <Face key={Math.random()} side={side} />;
       })}
