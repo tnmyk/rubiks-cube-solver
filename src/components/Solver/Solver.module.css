@@ -9,6 +9,7 @@
 .canvasContainer {
   /* width: fit-content; */
   position: relative;
+  margin-top: 2rem;
 }
 .boxesContainer {
   position: absolute;
@@ -34,4 +35,13 @@
   border: 1px solid black;
   margin-right: 1rem;
   display: inline-block;
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: black;
 }

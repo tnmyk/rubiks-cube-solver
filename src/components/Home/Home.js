@@ -12,7 +12,6 @@ const Home = () => {
           transform: "translate(-50%,-50%)",
           color: "white",
           padding: "1rem",
-          
           backgroundColor: "black",
         }}
       >
