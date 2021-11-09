@@ -45,3 +45,9 @@
   color: white;
   background-color: black;
 }
+
+.sidesContainer {
+  position: absolute;
+  left: 4rem;
+  top: 2rem;
+}

@@ -105,9 +105,11 @@ const Solver = () => {
       <button onClick={handleClick} className={styles.button}>
         Capture cube
       </button>
-      {sides.map((side) => {
-        return <Face key={Math.random()} side={side} />;
-      })}
+      <div className={styles.sidesContainer}>
+        {sides.map((side) => {
+          return <Face key={Math.random()} side={side} />;
+        })}
+      </div>
     </div>
   );
 };
